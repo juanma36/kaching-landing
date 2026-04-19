@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KaChing — Escuchá cada pago</title>
+  <meta name="description" content="KaChing avisa con voz y sonido cuando llega un pago por Mercado Pago. Sin mirar el celu, sin comprobantes falsos. Probalo gratis 7 días." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Tokens ── */
+    :root {
+      --hero-gradient: linear-gradient(135deg, #12f5b2 0%, #f5e53b 30%, #9747ff 65%, #ff3bac 100%);
+      --black: #000000;
+      --white: #ffffff;
+      --gray-100: #f7f7f7;
+      --gray-200: #eeeeee;
+      --gray-300: #e0e0e0;
+      --gray-500: #888888;
+      --gray-600: #666666;
+      --font: 'Inter', 'SF Pro Display', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', 'SF Mono', monospace;
+    }
+
+    /* ── Base ── */
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--white);
+      color: var(--black);
+      font-size: 16px;
+      font-weight: 330;
+      letter-spacing: -0.14px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Utility ── */
+    .mono-label {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.54px;
+      color: var(--gray-600);
+    }
+
+    .pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-family: var(--font);
+      font-size: 16px;
+      font-weight: 540;
+      letter-spacing: -0.14px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.18s;
+      border: none;
+    }
+    .pill-btn:hover { opacity: 0.85; }
+    .pill-btn:focus { outline: 2px dashed var(--black); outline-offset: 3px; }
+
+    .pill-btn--black { background: var(--black); color: var(--white); }
+    .pill-btn--white {
+      background: var(--white);
+      color: var(--black);
+      border: 1.5px solid var(--black);
+    }
+    .pill-btn--white:focus { outline-color: var(--white); }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--black);
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding: 0 40px;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 15px;
+      font-weight: 450;
+      color: var(--black);
+      text-decoration: none;
+      letter-spacing: -0.14px;
+    }
+    .nav-links a:hover { text-decoration: underline; }
+
+    .nav-cta { font-size: 14px; padding: 9px 20px; }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--hero-gradient);
+      padding: 100px 40px 120px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-mono {
+      color: rgba(0,0,0,0.6);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 7vw, 86px);
+      font-weight: 400;
+      line-height: 1.0;
+      letter-spacing: clamp(-1px, -0.02em, -1.72px);
+      color: var(--black);
+      max-width: 900px;
+      margin: 0 auto 24px;
+    }
+
+    .hero-sub {
+      font-size: clamp(18px, 2.5vw, 24px);
+      font-weight: 340;
+      line-height: 1.35;
+      letter-spacing: -0.26px;
+      color: rgba(0,0,0,0.75);
+      max-width: 560px;
+      margin: 0 auto 48px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .hero-badge {
+      margin-top: 40px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,0,0,0.08);
+      border-radius: 50px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 450;
+      letter-spacing: -0.14px;
+      color: rgba(0,0,0,0.7);
+    }
+    .hero-badge::before { content: '✓'; font-weight: 700; }
+
+    /* ── SECTION BASE ── */
+    section { padding: 96px 40px; }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: clamp(32px, 4vw, 56px);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.96px;
+      margin-bottom: 20px;
+    }
+
+    .section-desc {
+      font-size: 20px;
+      font-weight: 330;
+      line-height: 1.4;
+      letter-spacing: -0.14px;
+      color: var(--gray-600);
+      max-width: 580px;
+    }
+
+    /* ── PROBLEMA ── */
+    .problema { background: var(--white); }
+
+    .problema-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2px;
+      margin-top: 64px;
+      border: 1px solid var(--black);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .problema-card {
+      padding: 40px 36px;
+      background: var(--white);
+      border-right: 1px solid var(--black);
+    }
+    .problema-card:last-child { border-right: none; }
+
+    .problema-icon {
+      font-size: 40px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .problema-title {
+      font-size: 20px;
+      font-weight: 540;
+      letter-spacing: -0.26px;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .problema-desc {
+      font-size: 15px;
+      font-weight: 330;
+      color: var(--gray-600);
+      line-height: 1.5;
+      letter-spacing: -0.14px;
+    }
+
+    /* ── SOLUCIÓN ── */
+    .solucion { background: var(--black); color: var(--white); }
+    .solucion .section-title { color: var(--white); }
+    .solucion .section-desc { color: rgba(255,255,255,0.6); }
+    .solucion .mono-label { color: rgba(255,255,255,0.5); }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 48px;
+      margin-top: 72px;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .step-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+      flex-shrink: 0;
+    }
+
+    .step-title {
+      font-size: 22px;
+      font-weight: 540;
+      letter-spacing: -0.26px;
+      color: var(--white);
+    }
+
+    .step-desc {
+      font-size: 15px;
+      font-weight: 330;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.55;
+      letter-spacing: -0.14px;
+    }
+
+    /* ── VIDEO ── */
+    .video-section { background: var(--gray-100); padding: 80px 40px; }
+
+    .video-placeholder {
+      max-width: 800px;
+      margin: 56px auto 0;
+      aspect-ratio: 16/9;
+      background: var(--white);
+      border: 1px solid var(--black);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      color: var(--gray-500);
+    }
+
+    .video-play {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gray-300);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .video-caption {
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.54px;
+    }
+
+    /* ── CARACTERÍSTICAS ── */
+    .features { background: var(--white); }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0;
+      margin-top: 64px;
+      border: 1px solid var(--black);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .feature-item {
+      padding: 32px 28px;
+      border-right: 1px solid var(--black);
+      border-bottom: 1px solid var(--black);
+    }
+
+    /* remove right border on last in row, remove bottom border on last row */
+    .feature-item:nth-child(3n) { border-right: none; }
+    .feature-item:nth-last-child(-n+3) { border-bottom: none; }
+    /* last item alone in its row: also no right border */
+    .feature-item:last-child { border-right: none; border-bottom: none; }
+
+    .feature-icon {
+      font-size: 28px;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .feature-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.14px;
+      margin-bottom: 6px;
+    }
+
+    .feature-desc {
+      font-size: 14px;
+      font-weight: 330;
+      color: var(--gray-600);
+      line-height: 1.5;
+      letter-spacing: -0.14px;
+    }
+
+    /* ── PRECIO ── */
+    .precio { background: var(--gray-100); }
+
+    .precio-card {
+      max-width: 480px;
+      margin: 64px auto 0;
+      border: 1px solid var(--black);
+      border-radius: 8px;
+      background: var(--white);
+      overflow: hidden;
+    }
+
+    .precio-header {
+      padding: 40px 40px 32px;
+      border-bottom: 1px solid var(--black);
+    }
+
+    .precio-amount {
+      font-size: 72px;
+      font-weight: 700;
+      letter-spacing: -2px;
+      line-height: 1;
+      background: var(--hero-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .precio-period {
+      font-size: 20px;
+      font-weight: 330;
+      color: var(--gray-600);
+      letter-spacing: -0.14px;
+      margin-left: 4px;
+    }
+
+    .precio-trial {
+      margin-top: 12px;
+      font-size: 15px;
+      font-weight: 450;
+      color: var(--gray-600);
+      letter-spacing: -0.14px;
+    }
+
+    .precio-trial strong {
+      color: var(--black);
+      font-weight: 700;
+    }
+
+    .precio-body {
+      padding: 32px 40px;
+    }
+
+    .precio-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+
+    .precio-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 15px;
+      font-weight: 330;
+      letter-spacing: -0.14px;
+    }
+
+    .precio-features li::before {
+      content: '✓';
+      font-weight: 700;
+      color: var(--black);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .precio-disclaimer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: var(--gray-500);
+      text-align: center;
+      letter-spacing: -0.14px;
+    }
+
+    .precio-cta {
+      width: 100%;
+      padding: 16px;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    /* ── CTA FINAL ── */
+    .cta-final {
+      background: var(--hero-gradient);
+      text-align: center;
+      padding: 120px 40px;
+    }
+
+    .cta-final h2 {
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.96px;
+      color: var(--black);
+      max-width: 700px;
+      margin: 0 auto 16px;
+    }
+
+    .cta-final p {
+      font-size: 20px;
+      font-weight: 330;
+      color: rgba(0,0,0,0.7);
+      letter-spacing: -0.14px;
+      margin-bottom: 48px;
+    }
+
+    .cta-final-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 48px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      font-weight: 330;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: -0.14px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      font-weight: 330;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      letter-spacing: -0.14px;
+    }
+    .footer-links a:hover { color: var(--white); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav { padding: 0 20px; }
+      .nav-links { display: none; }
+
+      .hero { padding: 72px 20px 96px; }
+
+      section { padding: 72px 20px; }
+
+      .problema-grid { grid-template-columns: 1fr; }
+      .problema-card { border-right: none; border-bottom: 1px solid var(--black); }
+      .problema-card:last-child { border-bottom: none; }
+
+      .steps { gap: 40px; }
+
+      .video-section { padding: 60px 20px; }
+
+      .features-grid { grid-template-columns: 1fr 1fr; }
+      .feature-item:nth-child(3n) { border-right: 1px solid var(--black); }
+      .feature-item:nth-child(2n) { border-right: none; }
+      .feature-item:nth-last-child(-n+3) { border-bottom: 1px solid var(--black); }
+      .feature-item:nth-last-child(-n+2) { border-bottom: none; }
+
+      .precio-card { margin-top: 40px; }
+      .precio-header { padding: 32px 28px 24px; }
+      .precio-body { padding: 24px 28px; }
+      .precio-amount { font-size: 56px; }
+
+      .cta-final { padding: 80px 20px; }
+      .footer { padding: 40px 20px; flex-direction: column; align-items: flex-start; gap: 24px; }
+    }
+
+    @media (max-width: 560px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .feature-item { border-right: none; border-bottom: 1px solid var(--black); }
+      .feature-item:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════ NAV ═══════════ -->
+  <nav class="nav">
+    <a href="#" class="nav-logo">KaChing</a>
+    <ul class="nav-links">
+      <li><a href="#problema">El problema</a></li>
+      <li><a href="#como-funciona">Cómo funciona</a></li>
+      <li><a href="#precio">Precio</a></li>
+    </ul>
+    <a href="https://www.kachingapp.com.ar" class="pill-btn pill-btn--black nav-cta">
+      Empezar gratis
+    </a>
+  </nav>
+
+  <!-- ═══════════ HERO ═══════════ -->
+  <section class="hero">
+    <p class="mono-label hero-mono">Para negocios con Mercado Pago</p>
+    <h1>Escuchá cada pago,<br>sin mirar el celu.</h1>
+    <p class="hero-sub">
+      KaChing avisa con voz y sonido cada vez que llega un cobro por Mercado Pago.
+      Sin distracciones, sin estafas con comprobantes falsos.
+    </p>
+    <div class="hero-actions">
+      <a href="https://www.kachingapp.com.ar" class="pill-btn pill-btn--black">
+        Empezar gratis — 7 días
+      </a>
+    </div>
+    <div class="hero-badge">Sin tarjeta. Sin compromiso. Cancelás cuando querés.</div>
+  </section>
+
+  <!-- ═══════════ PROBLEMA ═══════════ -->
+  <section class="problema" id="problema">
+    <div class="section-inner">
+      <p class="mono-label section-label">El problema</p>
+      <h2 class="section-title">Cobrar no debería<br>ser tan estresante.</h2>
+      <p class="section-desc">
+        Cada venta es una situación de confianza. Estos son los riesgos que enfrentás a diario.
+      </p>
+
+      <div class="problema-grid">
+        <div class="problema-card">
+          <span class="problema-icon">📄</span>
+          <h3 class="problema-title">Te pueden mostrar un comprobante falso</h3>
+          <p class="problema-desc">
+            Capturas trucadas o apps de billetera falsa hacen creer que el pago llegó cuando en realidad no.
+            Si la caja no habla, el dinero no entró.
+          </p>
+        </div>
+        <div class="problema-card">
+          <span class="problema-icon">📱</span>
+          <h3 class="problema-title">Tenés que estar mirando el celu todo el tiempo</h3>
+          <p class="problema-desc">
+            Interrumpís lo que estás haciendo para verificar cada cobro.
+            Atendés al cliente, manejás el stock y encima tenés que chequear el teléfono.
+          </p>
+        </div>
+        <div class="problema-card">
+          <span class="problema-icon">🔒</span>
+          <h3 class="problema-title">Sin acceso al celu del titular no sabés si te pagaron</h3>
+          <p class="problema-desc">
+            Si el dueño de la cuenta no está o el teléfono está ocupado, quedás a ciegas.
+            No podés verificar si el cobro llegó de verdad.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ SOLUCIÓN ═══════════ -->
+  <section class="solucion" id="como-funciona">
+    <div class="section-inner">
+      <p class="mono-label section-label">Cómo funciona</p>
+      <h2 class="section-title">Tres pasos.<br>Cero dudas.</h2>
+      <p class="section-desc">
+        KaChing funciona desde el navegador, sin instalar nada.
+        Conectás tu cuenta de Mercado Pago una sola vez.
+      </p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3 class="step-title">Conectá tu cuenta de Mercado Pago</h3>
+          <p class="step-desc">
+            Ingresás a kachingapp.com.ar, autorizás con tu cuenta de Mercado Pago y listo.
+            No guardamos contraseñas. Solo escuchamos las notificaciones de pagos.
+          </p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3 class="step-title">Instalala como app en el celu o PC</h3>
+          <p class="step-desc">
+            KaChing es una PWA: funciona como app aunque es un sitio web.
+            Instalala desde el navegador y va a seguir andando en segundo plano.
+          </p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3 class="step-title">Escuchá cada pago en tiempo real</h3>
+          <p class="step-desc">
+            Cada vez que entra un cobro, KaChing habla: "Pago recibido, dos mil trescientos pesos".
+            El monto exacto, incluyendo centavos. Sin mirar nada.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ VIDEO ═══════════ -->
+  <section class="video-section">
+    <div class="section-inner">
+      <p class="mono-label section-label">Demo</p>
+      <h2 class="section-title">Vélo en acción.</h2>
+
+      <div class="video-placeholder">
+        <div class="video-play">▶</div>
+        <p class="video-caption">Video demo próximamente</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CARACTERÍSTICAS ═══════════ -->
+  <section class="features" id="caracteristicas">
+    <div class="section-inner">
+      <p class="mono-label section-label">Características</p>
+      <h2 class="section-title">Todo lo que<br>necesitás.</h2>
+
+      <div class="features-grid">
+        <div class="feature-item">
+          <span class="feature-icon">🔊</span>
+          <h4 class="feature-title">Voz en español</h4>
+          <p class="feature-desc">Lee en voz alta el monto exacto con cada cobro, incluyendo centavos.</p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">⚡</span>
+          <h4 class="feature-title">Tiempo real</h4>
+          <p class="feature-desc">La notificación llega en segundos desde que el pago impacta en tu cuenta.</p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">📊</span>
+          <h4 class="feature-title">Total del día</h4>
+          <p class="feature-desc">Muestra el acumulado y la cantidad de pagos recibidos durante la jornada.</p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">📱</span>
+          <h4 class="feature-title">Funciona en cualquier dispositivo</h4>
+          <p class="feature-desc">Celular, tablet o computadora. Android, iOS, Windows o Mac.</p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🛡️</span>
+          <h4 class="feature-title">Anti-comprobantes falsos</h4>
+          <p class="feature-desc">Solo suena cuando el dinero realmente entró a tu cuenta. Sin excepciones.</p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">🔧</span>
+          <h4 class="feature-title">Fácil de configurar</h4>
+          <p class="feature-desc">Un clic para conectar con Mercado Pago. Sin tecnicismos.</p>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">👤</span>
+          <h4 class="feature-title">Sin el celu del titular</h4>
+          <p class="feature-desc">Cualquier empleado puede saber si entró un pago, sin necesitar el teléfono del dueño de la cuenta.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ PRECIO ═══════════ -->
+  <section class="precio" id="precio">
+    <div class="section-inner">
+      <p class="mono-label section-label" style="text-align:center">Precio</p>
+      <h2 class="section-title" style="text-align:center">Simple y directo.</h2>
+
+      <div class="precio-card">
+        <div class="precio-header">
+          <div>
+            <span class="precio-amount">$8.000</span><span class="precio-period">/mes</span>
+          </div>
+        </div>
+        <div class="precio-body">
+          <ul class="precio-features">
+            <li>Notificaciones de voz y sonido ilimitadas</li>
+            <li>Historial de cobros del día</li>
+            <li>Funciona en todos tus dispositivos</li>
+            <li>Soporte por WhatsApp</li>
+            <li>Cancelás cuando querés, sin permanencia</li>
+          </ul>
+          <a href="https://www.kachingapp.com.ar" class="pill-btn pill-btn--black precio-cta">
+            Empezar
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CTA FINAL ═══════════ -->
+  <section class="cta-final">
+    <div class="section-inner">
+      <h2>¿Listo para cobrar<br>tranquilo?</h2>
+      <p>Probalo gratis 7 días. Sin tarjeta, sin permanencia.</p>
+      <div class="cta-final-actions">
+        <a href="https://www.kachingapp.com.ar" class="pill-btn pill-btn--black">
+          Empezar gratis
+        </a>
+        <a
+          href="https://wa.me/5491156694418?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20KaChing"
+          class="pill-btn pill-btn--white"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.858L.057 23.57a.75.75 0 0 0 .916.932l5.898-1.473A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.686-.523-5.207-1.432l-.373-.22-3.862.965.984-3.759-.242-.387A9.955 9.955 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+          </svg>
+          Consultar por WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="footer">
+    <span class="footer-logo">KaChing</span>
+    <div class="footer-links">
+      <a href="https://www.kachingapp.com.ar">App</a>
+      <a href="https://wa.me/5491156694418?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20sobre%20KaChing" target="_blank" rel="noopener">Contacto</a>
+    </div>
+    <span class="footer-copy">© 2025 KaChing. Todos los derechos reservados.</span>
+  </footer>
+
+</body>
+</html>
