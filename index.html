@@ -347,12 +347,18 @@
       border-right: 1px solid var(--black);
       border-bottom: 1px solid var(--black);
     }
-
-    /* remove right border on last in row, remove bottom border on last row */
-    .feature-item:nth-child(3n) { border-right: none; }
-    .feature-item:nth-last-child(-n+3) { border-bottom: none; }
-    /* last item alone in its row: also no right border */
-    .feature-item:last-child { border-right: none; border-bottom: none; }
+    /* Para 3 columnas: quitar borde derecho en el último de cada fila y borde abajo en los últimos 3 */
+    @media (min-width: 900px) {
+      .features-grid { grid-template-columns: repeat(3, 1fr); }
+      .feature-item:nth-child(3n) { border-right: none; }
+      .feature-item:nth-last-child(-n+3) { border-bottom: none; }
+    }
+    /* Para 2 columnas: quitar borde derecho en el último de cada fila y borde abajo en los últimos 2 */
+    @media (max-width: 899px) {
+      .features-grid { grid-template-columns: 1fr 1fr; }
+      .feature-item:nth-child(2n) { border-right: none; }
+      .feature-item:nth-last-child(-n+2) { border-bottom: none; }
+    }
 
     .feature-icon {
       font-size: 28px;
@@ -595,6 +601,12 @@
 
   <!-- ═══════════ HERO ═══════════ -->
   <section class="hero">
+    <div class="hero-demo-video" style="max-width: 700px; margin: 0 auto 40px;">
+      <div class="video-placeholder">
+        <div class="video-play">▶</div>
+        <p class="video-caption">Video demo próximamente</p>
+      </div>
+    </div>
     <p class="mono-label hero-mono">Para negocios con Mercado Pago</p>
     <h1>Escuchá cada transferencia,<br>sin mirar el celu.</h1>
     <p class="hero-sub">
@@ -686,18 +698,7 @@
     </div>
   </section>
 
-  <!-- ═══════════ VIDEO ═══════════ -->
-  <section class="video-section">
-    <div class="section-inner">
-      <p class="mono-label section-label">Demo</p>
-      <h2 class="section-title">Vélo en acción.</h2>
-
-      <div class="video-placeholder">
-        <div class="video-play">▶</div>
-        <p class="video-caption">Video demo próximamente</p>
-      </div>
-    </div>
-  </section>
+  <!-- VIDEO DEMO ahora está en el hero -->
 
   <!-- ═══════════ CARACTERÍSTICAS ═══════════ -->
   <section class="features" id="caracteristicas">
