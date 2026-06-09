@@ -733,6 +733,201 @@
         border-bottom: none;
       }
     }
+
+    /* ── INSTALACIÓN EN CHROME PC ── */
+    .install-pc {
+      background: var(--white);
+    }
+
+    .ipc-steps {
+      margin-top: 64px;
+      border: 1px solid var(--black);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .ipc-step {
+      display: flex;
+      gap: 24px;
+      padding: 32px 36px;
+      border-bottom: 1px solid var(--black);
+      background: var(--white);
+    }
+
+    .ipc-step:last-child {
+      border-bottom: none;
+    }
+
+    .ipc-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(0, 0, 0, 0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: rgba(0, 0, 0, 0.4);
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .ipc-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .ipc-title {
+      font-size: 18px;
+      font-weight: 540;
+      letter-spacing: -0.26px;
+      line-height: 1.35;
+      color: var(--black);
+    }
+
+    .ipc-url {
+      font-family: var(--mono);
+      font-size: 15px;
+      background: var(--gray-100);
+      padding: 2px 7px;
+      border-radius: 4px;
+      color: var(--black);
+    }
+
+    /* Chrome bar illustration */
+    .ipc-chrome-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .ipc-chrome-bar {
+      background: #2d2d2d;
+      border-radius: 8px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      max-width: 460px;
+    }
+
+    .ipc-chrome-dots {
+      display: flex;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+
+    .ipc-chrome-dots span {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .ipc-chrome-url {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.07);
+      border-radius: 20px;
+      padding: 5px 11px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .ipc-chrome-url span {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.75);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ipc-chrome-install {
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      background: #9fe870;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      animation: ipc-glow 2s ease-in-out infinite;
+    }
+
+    @keyframes ipc-glow {
+      0%, 100% {
+        box-shadow: 0 0 6px 0 #9fe870, 0 0 14px 2px rgba(159, 232, 112, 0.35);
+      }
+      50% {
+        box-shadow: 0 0 12px 4px #9fe870, 0 0 24px 8px rgba(159, 232, 112, 0.55);
+      }
+    }
+
+    .ipc-hint {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: #9fe870;
+      white-space: nowrap;
+      flex-shrink: 0;
+      letter-spacing: 0.3px;
+    }
+
+    /* Tip */
+    .ipc-tip {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-top: 32px;
+      background: var(--gray-100);
+      border: 1px solid var(--black);
+      border-radius: 8px;
+      padding: 20px 24px;
+    }
+
+    .ipc-tip-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      line-height: 1.5;
+    }
+
+    .ipc-tip p {
+      font-size: 15px;
+      font-weight: 330;
+      line-height: 1.55;
+      letter-spacing: -0.14px;
+      color: var(--black);
+    }
+
+    .ipc-tip strong {
+      font-weight: 700;
+    }
+
+    @media (max-width: 768px) {
+      .ipc-step {
+        padding: 24px 20px;
+        gap: 16px;
+      }
+
+      .ipc-title {
+        font-size: 16px;
+      }
+
+      .ipc-chrome-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .ipc-chrome-bar {
+        max-width: 100%;
+        width: 100%;
+      }
+    }
   </style>
   <script>
     !function (f, b, e, v, n, t, s) {
@@ -870,7 +1065,73 @@
     </div>
   </section>
 
-  <!-- VIDEO DEMO ahora está en el hero -->
+  <!-- ═══════════ INSTALACIÓN EN CHROME PC ═══════════ -->
+  <section class="install-pc" id="instalar">
+    <div class="section-inner">
+      <p class="mono-label section-label">Chrome en PC</p>
+      <h2 class="section-title">Instalala como app.<br>Escuchá aunque estés en otra cosa.</h2>
+      <p class="section-desc">
+        Si abrís KaChing como pestaña del navegador, solo escuchás los cobros mientras esa pestaña está abierta y visible.
+        Instalada como app, corre en segundo plano y avisa de cada pago aunque estés usando otras ventanas — sin necesidad de tener el navegador a la vista.
+      </p>
+
+      <div class="ipc-steps">
+        <div class="ipc-step">
+          <div class="ipc-num">01</div>
+          <div class="ipc-content">
+            <h3 class="ipc-title">Entrá a <span class="ipc-url">app.kachingapp.com.ar</span> desde Chrome</h3>
+          </div>
+        </div>
+
+        <div class="ipc-step">
+          <div class="ipc-num">02</div>
+          <div class="ipc-content">
+            <h3 class="ipc-title">Buscá el ícono de instalación en el extremo derecho de la barra de direcciones</h3>
+            <div class="ipc-chrome-wrap">
+              <div class="ipc-chrome-bar">
+                <div class="ipc-chrome-dots">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="ipc-chrome-url">
+                  <svg width="11" height="13" viewBox="0 0 11 13" fill="none" aria-hidden="true">
+                    <rect x="1.5" y="5.5" width="8" height="7" rx="1.5" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+                    <path d="M3 5.5V3.5a2.5 2.5 0 0 1 5 0v2" stroke="rgba(255,255,255,0.35)" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+                  </svg>
+                  <span>app.kachingapp.com.ar</span>
+                </div>
+                <div class="ipc-chrome-install" aria-label="Ícono de instalación">
+                  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+                    <path d="M7.5 1.5v8M7.5 9.5L5 7M7.5 9.5L10 7" stroke="#1a1a1a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M1.5 11v1.5A1.5 1.5 0 0 0 3 14h9a1.5 1.5 0 0 0 1.5-1.5V11" stroke="#1a1a1a" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+                  </svg>
+                </div>
+              </div>
+              <span class="ipc-hint">← tocá acá</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ipc-step">
+          <div class="ipc-num">03</div>
+          <div class="ipc-content">
+            <h3 class="ipc-title">Hacé clic en ese ícono → aparece un cartel → hacé clic en "Instalar"</h3>
+          </div>
+        </div>
+
+        <div class="ipc-step">
+          <div class="ipc-num">04</div>
+          <div class="ipc-content">
+            <h3 class="ipc-title">La app se abre en su propia ventana. Minimizala y seguís escuchando cada pago aunque estés trabajando en otra cosa.</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="ipc-tip">
+        <span class="ipc-tip-icon">💡</span>
+        <p><strong>Tip:</strong> La app tiene que estar abierta para anunciar los pagos. Abrila cuando arranques el día y dejala corriendo.</p>
+      </div>
+    </div>
+  </section>
 
   <!-- ═══════════ CARACTERÍSTICAS ═══════════ -->
   <section class="features" id="caracteristicas">
