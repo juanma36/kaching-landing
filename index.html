@@ -463,101 +463,6 @@
       letter-spacing: -0.14px;
     }
 
-    /* ── PRECIO ── */
-    .precio {
-      background: var(--gray-100);
-    }
-
-    .precio-card {
-      max-width: 480px;
-      margin: 64px auto 0;
-      border: 1px solid var(--black);
-      border-radius: 8px;
-      background: var(--white);
-      overflow: hidden;
-    }
-
-    .precio-header {
-      padding: 40px 40px 32px;
-      border-bottom: 1px solid var(--black);
-    }
-
-    .precio-amount {
-      font-size: 72px;
-      font-weight: 700;
-      letter-spacing: -2px;
-      line-height: 1;
-      background: var(--hero-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .precio-period {
-      font-size: 20px;
-      font-weight: 330;
-      color: var(--gray-600);
-      letter-spacing: -0.14px;
-      margin-left: 4px;
-    }
-
-    .precio-trial {
-      margin-top: 12px;
-      font-size: 15px;
-      font-weight: 450;
-      color: var(--gray-600);
-      letter-spacing: -0.14px;
-    }
-
-    .precio-trial strong {
-      color: var(--black);
-      font-weight: 700;
-    }
-
-    .precio-body {
-      padding: 32px 40px;
-    }
-
-    .precio-features {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      margin-bottom: 32px;
-    }
-
-    .precio-features li {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      font-size: 15px;
-      font-weight: 330;
-      letter-spacing: -0.14px;
-    }
-
-    .precio-features li::before {
-      content: '✓';
-      font-weight: 700;
-      color: var(--black);
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .precio-disclaimer {
-      margin-top: 20px;
-      font-size: 12px;
-      color: var(--gray-500);
-      text-align: center;
-      letter-spacing: -0.14px;
-    }
-
-    .precio-cta {
-      width: 100%;
-      padding: 16px;
-      justify-content: center;
-      font-size: 16px;
-    }
-
     /* ── CTA FINAL ── */
     .cta-final {
       background: var(--hero-gradient);
@@ -689,22 +594,6 @@
 
       .feature-item:nth-last-child(-n+2) {
         border-bottom: none;
-      }
-
-      .precio-card {
-        margin-top: 40px;
-      }
-
-      .precio-header {
-        padding: 32px 28px 24px;
-      }
-
-      .precio-body {
-        padding: 24px 28px;
-      }
-
-      .precio-amount {
-        font-size: 56px;
       }
 
       .cta-final {
@@ -957,7 +846,6 @@
     <ul class="nav-links">
       <li><a href="#problema">El problema</a></li>
       <li><a href="#como-funciona">Cómo funciona</a></li>
-      <li><a href="#precio">Precio</a></li>
     </ul>
     <a href="https://wa.me/5491156694418?text=Hola%2C%20quiero%20mi%20prueba%20gratis%20de%20Kaching%20por%207%20d%C3%ADas"
       class="pill-btn pill-btn--black nav-cta" target="_blank" rel="noopener"
@@ -1170,35 +1058,6 @@
           <h4 class="feature-title">Sin el celu del titular</h4>
           <p class="feature-desc">Cualquier empleado puede saber si entró una transferencia, sin necesitar el teléfono
             del dueño de la cuenta.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════ PRECIO ═══════════ -->
-  <section class="precio" id="precio">
-    <div class="section-inner">
-      <p class="mono-label section-label" style="text-align:center">Precio</p>
-      <h2 class="section-title" style="text-align:center">Simple y directo.</h2>
-
-      <div class="precio-card">
-        <div class="precio-header">
-          <div>
-            <span class="precio-amount">$8.000</span><span class="precio-period">/mes</span>
-          </div>
-        </div>
-        <div class="precio-body">
-          <ul class="precio-features">
-            <li>Notificaciones de voz y sonido ilimitadas</li>
-            <li>Historial de cobros del día</li>
-            <li>Funciona en todos tus dispositivos</li>
-            <li>Soporte por WhatsApp</li>
-            <li>Cancelás cuando querés, sin permanencia</li>
-          </ul>
-          <a href="https://www.kachingapp.com.ar" class="pill-btn pill-btn--black precio-cta"
-            onclick="fbq('track', 'Lead', {content_name: 'precio_cta'})">
-            Empezar
-          </a>
         </div>
       </div>
     </div>
